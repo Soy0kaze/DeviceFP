@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 主色调：柔和的蓝色系 -->
+    <color name="primary_blue">#5B9BD5</color>
+    <color name="primary_blue_light">#8BB8E8</color>
+    <color name="primary_blue_dark">#3A7BB0</color>
+    
+    <!-- 辅助色：柔和的灰色系 -->
+    <color name="gray_50">#FAFAFA</color>
+    <color name="gray_100">#F5F5F5</color>
+    <color name="gray_200">#EEEEEE</color>
+    <color name="gray_300">#E0E0E0</color>
+    <color name="gray_400">#BDBDBD</color>
+    <color name="gray_500">#9E9E9E</color>
+    <color name="gray_600">#757575</color>
+    <color name="gray_700">#616161</color>
+    <color name="gray_800">#424242</color>
+    <color name="gray_900">#212121</color>
+    
+    <!-- 文本颜色 -->
+    <color name="text_primary">#212121</color>
+    <color name="text_secondary">#757575</color>
+    <color name="text_hint">#9E9E9E</color>
+    <color name="text_white">#FFFFFF</color>
+    
+    <!-- 背景色 -->
+    <color name="background_light">#FFFFFF</color>
+    <color name="background_gray">#F5F5F5</color>
+    <color name="card_background">#FFFFFF</color>
+    
+    <!-- 状态颜色 -->
+    <color name="status_success">#4CAF50</color>
+    <color name="status_warning">#FF9800</color>
+    <color name="status_info">#2196F3</color>
+    <color name="status_default">#9E9E9E</color>
+    
+    <!-- 活力色（点缀用） -->
+    <color name="accent_green">#66BB6A</color>
+    <color name="accent_orange">#FFA726</color>
+    <color name="accent_purple">#AB47BC</color>
+    
+    <!-- 兼容旧颜色 -->
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#5B9BD5</color>
+    <color name="purple_700">#3A7BB0</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+</resources>
