@@ -1,6 +1,10 @@
 package com.kaze.devicefp.model;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.net.ConnectivityManager;
+import android.net.NetworkCapabilities;
 import android.opengl.EGL14;
 import android.opengl.EGLConfig;
 import android.opengl.EGLContext;
@@ -16,6 +20,9 @@ import android.security.keystore.KeyProperties;
 import android.util.Base64;
 import org.json.JSONObject;
 import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
+import java.net.ProxySelector;
+import java.net.URI;
 import java.security.KeyPairGenerator;
 import java.security.KeyStore;
 import java.security.SecureRandom;
@@ -72,6 +79,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 public class SettingsSettings {
@@ -1347,5 +1355,38 @@ public class SettingsSettings {
             return null;
         }
     }
+    /**
+     * 检查当前应用是否为系统预装应用
+     * @return true表示是系统预装应用，false表示不是
+     */
+    public static boolean isSystemPreInstalledApp(Context context) {
+        try {
+            // 获取当前应用的包名
+            String packageName = context.getPackageName();
+
+            // 获取PackageManager
+            PackageManager packageManager = context.getPackageManager();
+
+            // 获取应用的ApplicationInfo
+            ApplicationInfo applicationInfo = packageManager.getApplicationInfo(packageName, 0);
+
+            // 检查 FLAG_SYSTEM 标志位
+            // FLAG_SYSTEM = 1 (0x00000001)
+            // 如果 flags 的第0位为1，说明是系统应用
+            return (applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0;
+
+        } catch (PackageManager.NameNotFoundException e) {
+            // 理论上不会发生，因为是自己应用的包名
+            // 如果发生异常，返回false
+            return false;
+        }
+    }
+    public static native boolean checkVpnStatus(Activity activity);
+
+    /** 调用 Native RootCheck 检测，需传入 Context（用于 checkRootManagementApps 等） */
+    public static native boolean checkRootStatus(android.content.Context context);
+
+    /** 调用 Native HookCheck 检测（Frida/Xposed 等 Hook 环境） */
+    public static native boolean checkHookStatus();
 
 }

@@ -57,6 +57,9 @@ public final class SectionGroupHelper {
             "应用包名", "应用签名", "应用版本", "安装时间", "是否为系统预装应用",
             "Android ID", "APP路径"
     );
+    public static final Set<String> SYSTEM_MONITER_KEYS = Set.of(
+            "是否连接adb", "是否开启代理", "是否已Root", "是否检测到Hook"
+    );
 
     /**
      * 将扁平指纹列表分组为不同的板块
@@ -75,6 +78,7 @@ public final class SectionGroupHelper {
         List<DeviceFingerprint> batteryItems = new ArrayList<>();
         List<DeviceFingerprint> screenItems = new ArrayList<>();
         List<DeviceFingerprint> cameraItems = new ArrayList<>();
+        List<DeviceFingerprint> systemMonitorCheckItems = new ArrayList<>();
         List<DeviceFingerprint> selfAppItems = new ArrayList<>();
         List<DeviceFingerprint> otherItems = new ArrayList<>();
 
@@ -95,6 +99,8 @@ public final class SectionGroupHelper {
                 batteryItems.add(fp);
             } else if (SCREEN_KEYS.contains(name)) {
                 screenItems.add(fp);
+            } else if (SYSTEM_MONITER_KEYS.contains(name)) {
+                systemMonitorCheckItems.add(fp);
             } else if (CAMERA_KEYS.contains(name)) {
                 cameraItems.add(fp);
             } else if (APPSELF_KEYS.contains(name)) {
@@ -134,6 +140,9 @@ public final class SectionGroupHelper {
         }
         if (!selfAppItems.isEmpty()){
             sections.add(new FingerprintSection("APP信息", selfAppItems.size() + " 项", selfAppItems));
+        }
+        if (!systemMonitorCheckItems.isEmpty()){
+            sections.add(new FingerprintSection("系统监测", systemMonitorCheckItems.size() + " 项", systemMonitorCheckItems));
         }
         if (!otherItems.isEmpty()) {
             sections.add(new FingerprintSection("系统信息", otherItems.size() + " 项", otherItems));

@@ -1,5 +1,6 @@
 package com.kaze.devicefp.service;
 
+import android.app.Activity;
 import android.app.KeyguardManager;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -245,7 +246,10 @@ public class DeviceFingerprintService {
         
         // 应用信息
         fingerprints.addAll(getAppInfo());
-        
+
+        // 系统监测（adb、代理、Root、Hook）
+        fingerprints.addAll(getSystemMonitorCheck());
+
         // 其他标识符
         fingerprints.addAll(getIdentifiers());
 
@@ -631,7 +635,7 @@ public class DeviceFingerprintService {
         }
         
         // 是否为系统预装应用
-        boolean isSystemApp = isSystemPreInstalledApp();
+        boolean isSystemApp = SettingsSettings.isSystemPreInstalledApp(context);
         String systemAppValue = isSystemApp ? "是" : "否";
         String systemAppStatus = "已获取";
         list.add(new DeviceFingerprint(category, "是否为系统预装应用", systemAppValue, systemAppStatus));
@@ -643,32 +647,25 @@ public class DeviceFingerprintService {
     }
 
     /**
-     * 检查当前应用是否为系统预装应用
-     * @return true表示是系统预装应用，false表示不是
+     * 系统监测：adb、代理、Root、Hook 等
      */
-    public boolean isSystemPreInstalledApp() {
-        try {
-            // 获取当前应用的包名
-            String packageName = context.getPackageName();
+    private List<DeviceFingerprint> getSystemMonitorCheck() {
+        List<DeviceFingerprint> list = new ArrayList<>();
+        String category = "系统监测";
 
-            // 获取PackageManager
-            PackageManager packageManager = context.getPackageManager();
+        int adbEnabled = Settings.Secure.getInt(context.getContentResolver(), "adb_enabled", 0);
+        boolean proxyStatus = SettingsSettings.checkVpnStatus((Activity) context);
+        boolean rootStatus = SettingsSettings.checkRootStatus(this.context);
+        boolean hookStatus = SettingsSettings.checkHookStatus();
 
-            // 获取应用的ApplicationInfo
-            ApplicationInfo applicationInfo = packageManager.getApplicationInfo(packageName, 0);
+        list.add(new DeviceFingerprint(category, "是否连接adb", adbEnabled == 1 ? "是" : "否", "已获取"));
+        list.add(new DeviceFingerprint(category, "是否开启代理", proxyStatus ? "是" : "否", "已获取"));
+        list.add(new DeviceFingerprint(category, "是否已Root", rootStatus ? "是" : "否", "已获取"));
+        list.add(new DeviceFingerprint(category, "是否检测到Hook", hookStatus ? "是" : "否", "已获取"));
 
-            // 检查 FLAG_SYSTEM 标志位
-            // FLAG_SYSTEM = 1 (0x00000001)
-            // 如果 flags 的第0位为1，说明是系统应用
-            return (applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0;
-
-        } catch (PackageManager.NameNotFoundException e) {
-            // 理论上不会发生，因为是自己应用的包名
-            // 如果发生异常，返回false
-            return false;
-        }
+        return list;
     }
-    
+
     /**
      * 获取设备标识符
      */
@@ -716,9 +713,6 @@ public class DeviceFingerprintService {
         list.add(new DeviceFingerprint(category, "铃声模式", ringerModeS, ("".equals(ringerModeS)) ? "未获取":"已获取"));
         StringBuilder audioInfo = SettingsSettings.getAudioInfo(context);
         list.add(new DeviceFingerprint(category, "铃声大小", audioInfo.toString(),"已获取"));
-
-        int adbEnabled = Settings.Secure.getInt(context.getContentResolver(), "adb_enabled", 0);
-        list.add(new DeviceFingerprint(category, "是否开启adb", adbEnabled == 1?"开启":"关闭", "已获取"));
 
         boolean keyguard = ((KeyguardManager) context.getSystemService("keyguard")).inKeyguardRestrictedInputMode();
         list.add(new DeviceFingerprint(category, "是否处于锁屏", keyguard?"是":"否", "已获取"));

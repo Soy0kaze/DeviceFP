@@ -29,12 +29,12 @@ std::string PropertyParser::getPropertyFilePath() const {
     switch (m_type) {
         case PropertyType::BUILD:
             return "/dev/__properties__/u:object_r:build_prop:s0";
-        case PropertyType::SYSTEM:
-            return "/dev/__properties__/u:object_r:system_prop:s0";
-        case PropertyType::DEFAULT:
-            return "/dev/__properties__/u:object_r:default_prop:s0";
-        case PropertyType::VENDOR:
-            return "/dev/__properties__/u:object_r:vendor_build_prop:s0";
+//        case PropertyType::SYSTEM:
+//            return "/dev/__properties__/u:object_r:system_prop:s0";
+//        case PropertyType::DEFAULT:
+//            return "/dev/__properties__/u:object_r:default_prop:s0";
+//        case PropertyType::VENDOR:
+//            return "/dev/__properties__/u:object_r:vendor_build_prop:s0";
         default:
             return "/dev/__properties__/u:object_r:build_prop:s0";
     }

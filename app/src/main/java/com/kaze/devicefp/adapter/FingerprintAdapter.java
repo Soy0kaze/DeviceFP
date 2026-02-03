@@ -141,7 +141,7 @@ public class FingerprintAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         // 设置文本显示：内存信息、IP地址、硬件功能、摄像头详细信息等长文本允许全部展示不截断
         holder.valueText.setSingleLine(false);
         String name = fingerprint.getName();
-        if ("OpenGL".equals(name) || "KeyStoreAttestation".equals(name) || "Attestation".equals(name) || "硬件列表".equals(name) || "传感器".equals(name) || "应用签名".equals(name) || "服务列表".equals(name) || "物理输入设备".equals(name) || "DexClassLoader的路径列表".equals(name) || "设备模式信息".equals(name) || "输入法列表".equals(name) || "已安装辅助服务列表".equals(name) || "系统文件哈希".equals(name) || "铃声大小".equals(name) || "内存信息".equals(name) || "IP地址".equals(name) || "硬件功能".equals(name) || "摄像头详细信息".equals(name)) {
+        if ("APP路径".equals(name) || "NetName".equals(name) || "网关".equals(name) || "OpenGL".equals(name) || "KeyStoreAttestation".equals(name) || "Attestation".equals(name) || "硬件列表".equals(name) || "传感器".equals(name) || "应用签名".equals(name) || "服务列表".equals(name) || "物理输入设备".equals(name) || "DexClassLoader的路径列表".equals(name) || "设备模式信息".equals(name) || "输入法列表".equals(name) || "已安装辅助服务列表".equals(name) || "系统文件哈希".equals(name) || "铃声大小".equals(name) || "内存信息".equals(name) || "IP地址".equals(name) || "硬件功能".equals(name) || "摄像头详细信息".equals(name)) {
             holder.valueText.setMaxLines(Integer.MAX_VALUE);
             holder.valueText.setEllipsize(null);
         } else {
